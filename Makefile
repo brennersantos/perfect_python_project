@@ -3,6 +3,9 @@
 install:
 	@poetry install
 
+install_hooks:
+    scripts/install_hooks.sh
+
 format:
 	@blue .
 	@isort .
