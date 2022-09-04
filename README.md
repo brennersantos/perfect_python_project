@@ -1,35 +1,33 @@
-Referências:
-https://www.youtube.com/watch?v=O3bs4JtHrow
-https://blog.pronus.io/posts/python/como-comecar-um-projeto-python-perfeito/
+## Projeto Python Perfeito
+Passos que segui para a criação desse setup:
 
-* Criar repositório no Git
-* Criar pastas para a documentação (docs), os testes (tests) e o código fonte (perfect_python_project - nome do projeto)
-* Criar documento README.md
-* Criar documento .gitignore
-https://www.toptal.com/developers/gitignore
+### Referências
+* [Como organizar um projeto Python? - Live de Python #192](https://www.youtube.com/watch?v=O3bs4JtHrow) | Eduardo Mendes
+* [Como Começar um Projeto Python Perfeito](https://blog.pronus.io/posts/python/como-comecar-um-projeto-python-perfeito/) | André Felipe Dias
 
-* Escolher versão do python com o pyenv
-pyenv install <python-version>
-pyenv local <python-version>
+### Passos
+1. Criar repositório no Git
+2. Criar pastas para a documentação (docs), os testes (tests) e o código fonte (perfect_python_project - nome do projeto)
+3. Criar documento README.md
+4. Criar documento [.gitignore](https://www.toptal.com/developers/gitignore)
+5. Escolher versão do python com o pyenv
+`pyenv install python-version`
+`pyenv local python-version`
+6. Iniciar o poetry para gerenciar o ambiente virtual
+`poetry init -n`
+`poetry shell`
+7. Instalar pacotes para a documentação 
+`poetry add --dev mkdocs`
+`mkdocs new .`
+8. Instalar pacotes para os tests
+`poetry add --dev pytest`
+9. Instalar pacotes para o código fonte
+`poetry add --dev blue`
+`poetry add --dev isort`
+`poetry add --dev pip-audit`
 
-* Iniciar o poetry para gerenciar o ambiente virtual
-poetry init -n
-poetry shell
-
-* Instalar pacotes para a documentação 
-poetry add --dev mkdocs
-mkdocs new .
-
-* Instalar pacotes para os tests
-poetry add --dev pytest
-
-* Instalar pacotes para o código fonte
-poetry add --dev blue
-poetry add --dev isort
-poetry add --dev prospector
-poetry add --dev pip-audit
-
-* Criar arquivo Makefile
+10. Criar arquivo Makefile
+```
 .PHONY: install format lint test sec
 
 install:
@@ -46,17 +44,19 @@ test:
 	@pytest -v
 sec:
 	@pip-audit
+```
 
-* Ciar arquivo ./.git/hooks/pre-commit e dar permissão de execução
+11. Ciar arquivo ./.git/hooks/pre-commit e dar permissão de execução
+```
+make format
 make lint
 make test
-make sec
+```
+`chmod +x ./.git/hooks/pre-commit`
 
-chmod +x ./.git/hooks/pre-commit
-
-
-* Criar arquivo ./.github/workflows/continuous_integration.yml
-
+12. Criar arquivo 
+`touch ./.github/workflows/continuous_integration.yml`
+```
 name: Coninuous Integration
 on: [push]
 jobs:
@@ -93,6 +93,4 @@ jobs:
 
       - name: Run Test
         run: poetry run make test
-      
-      - name: Run Sec
-        run: poetry run make sec
+```
